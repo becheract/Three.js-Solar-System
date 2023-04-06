@@ -2,6 +2,10 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import sunTexture from "../img/sun.webp";
+import marko from "../img/marko.jpg";
+import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
+import { FontLoader } from "three/addons/loaders/FontLoader.js";
+// WebGL compatibility check
 /* allows the use of images */
 const textureLoader = new THREE.TextureLoader();
 /* Setting up Scene */
@@ -20,7 +24,7 @@ document.body.appendChild(renderer.domElement);
 //adding sun
 const sunGeometry = new THREE.SphereGeometry(1, 32, 32);
 const sunMaterial = new THREE.MeshBasicMaterial({
-  map: textureLoader.load(sunTexture),
+  map: textureLoader.load(marko),
 });
 const sun = new THREE.Mesh(sunGeometry, sunMaterial);
 scene.add(sun);
@@ -36,3 +40,24 @@ const animate = () => {
 };
 
 animate();
+
+// adding controls
+const orbit = new OrbitControls(camera, renderer.domElement);
+
+/* Text */
+const loader = new FontLoader();
+
+loader.load("src/fonts/helvetiker_regular.typeface.json", function (font) {
+  const geometry = new TextGeometry("Hello three.js!", {
+    color: 0x006699,
+    font: font,
+    size: 80,
+    height: 5,
+    curveSegments: 12,
+    bevelEnabled: true,
+    bevelThickness: 10,
+    bevelSize: 8,
+    bevelOffset: 0,
+    bevelSegments: 5,
+  });
+});
