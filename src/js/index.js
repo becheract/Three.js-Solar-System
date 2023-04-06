@@ -1,7 +1,9 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-
+import sunTexture from "../img/sun.webp";
+/* allows the use of images */
+const textureLoader = new THREE.TextureLoader();
 /* Setting up Scene */
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
@@ -16,7 +18,21 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 //adding sun
-const sunGeometry = new THREE.SphereGeometry(1, 1, 1);
-const sunMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+const sunGeometry = new THREE.SphereGeometry(1, 32, 32);
+const sunMaterial = new THREE.MeshBasicMaterial({
+  map: textureLoader.load(sunTexture),
+});
 const sun = new THREE.Mesh(sunGeometry, sunMaterial);
 scene.add(sun);
+camera.position.z = 5;
+
+/* Rendering the Scene */
+
+const animate = () => {
+  requestAnimationFrame(animate);
+  //gives the sun rotation
+  sun.rotation.y += 0.01;
+  renderer.render(scene, camera);
+};
+
+animate();
