@@ -120,25 +120,6 @@ const neptune = new THREE.Mesh(neptuneGeometry, neptuneMaterial);
 scene.add(neptune);
 neptune.position.x = 11.5;
 
-/* Rendering the Scene */
-const animate = () => {
-  requestAnimationFrame(animate);
-  //gives the sun rotation
-  sun.rotateY(0.004);
-  mercury.rotateY(0.004);
-  // venus.rotation.y += 0.01;
-  // earth.rotation.y += 0.01;
-  // mars.rotation.y += 0.01;
-  // jupiter.rotation.y += 0.01;
-  // saturn.rotation.y += 0.01;
-  // saturnRings.rotation.z += 0.01;
-  // uranus.rotation.y += 0.01;
-  // neptune.rotation.y += 0.01;
-  renderer.render(scene, camera);
-};
-
-animate();
-
 // adding controls
 const orbit = new OrbitControls(camera, renderer.domElement);
 
@@ -181,7 +162,42 @@ window.addEventListener("resize", () => {
 /* Rotate other planets around sun */
 sun.add(mercury);
 mercury.position.x = 2;
-// sun.add(venus);
+
+const mercuryObj = new THREE.Object3D();
+mercuryObj.add(mercury);
+scene.add(mercuryObj);
+
+const venusObj = new THREE.Object3D();
+venusObj.add(venus);
+scene.add(venusObj);
+
+const earthObj = new THREE.Object3D();
+earthObj.add(earth);
+scene.add(earthObj);
+
+const marsObj = new THREE.Object3D();
+marsObj.add(mars);
+scene.add(marsObj);
+
+const jupiterObj = new THREE.Object3D();
+jupiterObj.add(jupiter);
+scene.add(jupiterObj);
+
+const saturnObj = new THREE.Object3D();
+saturnObj.add(saturn);
+scene.add(saturnObj);
+
+const saturnRingObj = new THREE.Object3D();
+saturnRingObj.add(saturnRings);
+scene.add(saturnRingObj);
+
+const uranusObj = new THREE.Object3D();
+uranusObj.add(uranus);
+scene.add(uranusObj);
+
+const neptuneObj = new THREE.Object3D();
+neptuneObj.add(neptune);
+scene.add(neptuneObj);
 // sun.add(earth);
 // sun.add(saturn);
 // sun.add(saturnRings);
@@ -191,5 +207,42 @@ mercury.position.x = 2;
 // sun.add(neptune);
 
 /* light */
-const pointLight = new THREE.PointLight(0xffffff, 2, 300);
+const pointLight = new THREE.PointLight(0xffffff, 1, 300);
 scene.add(pointLight);
+
+/* Rendering the Scene */
+const animate = () => {
+  requestAnimationFrame(animate);
+  //gives the sun rotation
+  sun.rotateY(0.004);
+
+  mercury.rotateY(0.004);
+  mercuryObj.rotateY(0.04);
+
+  venus.rotateY(0.002);
+  venusObj.rotateY(0.015);
+
+  earth.rotateY(0.002);
+  earthObj.rotateY(0.01);
+
+  mars.rotateY(0.018);
+  marsObj.rotateY(0.008);
+
+  jupiter.rotateY(0.004);
+  jupiterObj.rotateY(0.002);
+
+  saturn.rotateY(0.038);
+  saturnObj.rotateY(0.0009);
+
+  saturnRingObj.rotateY(0.0009);
+
+  uranus.rotateY(0.004);
+  uranusObj.rotateY(0.002);
+
+  neptune.rotateY(0.032);
+  neptuneObj.rotateY(0.0001);
+
+  renderer.render(scene, camera);
+};
+
+animate();
